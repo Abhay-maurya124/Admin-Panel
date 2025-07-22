@@ -19,7 +19,7 @@ const App = () => {
     <BrowserRouter>
       <div className={`flex`}>
         <Navbar />
-        <div className="w-full bg-amber-800">
+        <div className="w-full">
           <Sidebar />
           <main className="">
         <Routes>

@@ -6,19 +6,19 @@ import { FaAngleDown } from "react-icons/fa";
 
 const Sidebar = () => {
   return (
-    <div className="h-10 bg-amber-300">
-      <div className="flex justify-between">
+    <div className="h-14 p-2 bg-amber-300">
+      <div className="flex  justify-between">
         <div className="flex items-center pl-20 gap-10">
           <Menu />
           <Search />
         </div>
         <div className="flex items-center pr-10 gap-5">
-          <IoCartOutline className="w-6 h-10"/>
-          <FaRegMessage/>
-          <BellDotIcon/>
-          <div className="flex justify-between">
-            <img className="h-10 bg-red-500 rounded-[50%]" src="public/Images/using-smartphone-woman.png" alt="" />
-            <p>Hi, Abhay <FaAngleDown/> </p>
+          <IoCartOutline className="w-6 h-10" />
+          <FaRegMessage />
+          <BellDotIcon />
+          <div className="flex gap-7 justify-between">
+            <img className="h-10 bg-red-500 rounded-[50%]" src="Images/using-smartphone-woman.png" alt="" />
+            <p>Hi, Abhay <FaAngleDown /> </p>
           </div>
         </div>
       </div>

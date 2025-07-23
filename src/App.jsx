@@ -13,32 +13,37 @@ import Areachart from "./scenes/dashbord/Areachart.jsx";
 import Graph from "./scenes/dashbord/Graph.jsx";
 import Piechart from "./scenes/dashbord/Piechart.jsx";
 import Navbar from "./scenes/global/Navbar.jsx";
-import Sidebar  from "./scenes/global/Sidebar.jsx";
+import Sidebar from "./scenes/global/Sidebar.jsx";
+import { ThemeFunc } from "./scenes/assets/CreateApi.jsx";
+import Footer from "./scenes/dashbord/Footer.jsx";
 const App = () => {
+  const { Toggle } = useContext(ThemeFunc);
+
   return (
     <BrowserRouter>
-      <div className={`flex`}>
+      <div className={`flex min-h-screen ${Toggle === "light" ? "bg-gray-50" : "bg-gray-900"}`}>
         <Navbar />
-        <div className="w-full">
+        <div className="flex-1 flex flex-col">
           <Sidebar />
-          <main className="">
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/orders" element={<Order />} />
-          <Route path="/employees" element={<Employees />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/kanban" element={<Kanban />} />
-          <Route path="/editor" element={<Editor />} />
-          <Route path="/line" element={<LineChart />} />
-          <Route path="/area" element={<Areachart />} />
-          <Route path="/graph" element={<Graph />} />
-          <Route path="/piechart" element={<Piechart />} />
-        </Routes>
-      </main>
+          <main className={`flex-1 p-6 overflow-auto transition-colors duration-300 ${Toggle === "light" ? "bg-gray-50" : "bg-gray-900 text-white"}`}>
+            <Routes>
+              <Route path="/" element={<Hero />} />
+              <Route path="/orders" element={<Order />} />
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/customers" element={<Customers />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/kanban" element={<Kanban />} />
+              <Route path="/editor" element={<Editor />} />
+              <Route path="/line" element={<LineChart />} />
+              <Route path="/area" element={<Areachart />} />
+              <Route path="/graph" element={<Graph />} />
+              <Route path="/piechart" element={<Piechart />} />
+            </Routes>
+          </main>
+          <Footer />
+
         </div>
       </div>
-    
     </BrowserRouter>
   );
 };

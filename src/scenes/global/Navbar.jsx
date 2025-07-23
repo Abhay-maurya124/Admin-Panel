@@ -12,6 +12,8 @@ import {
   PieChart,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { ThemeFunc } from "../assets/CreateApi";
+import { useContext } from "react";
 
 const Dashboard = [
   {
@@ -91,20 +93,30 @@ const Dashboard = [
   },
 ];
 
-const Navbar = () => { 
+const Navbar = () => {
+  const { Toggle, sidecloser, open } = useContext(ThemeFunc);
+
   return (
-    <div className="w-64 sticky top-0 overflow-y h-screen border-r bg-amber-50 ">
-      <div className="flex justify-between p-5 items-center">
+    <div className={`
+      fixed lg:sticky top-0 z-40 lg:h-screen overflow-hidden transition-all duration-300 ease-in-out
+      ${Toggle === "light" ? "bg-white border-r border-gray-200" : "bg-gray-900 border-r border-gray-700 text-white"}
+      ${open ? "w-64" : "w-0 overflow-hidden"}
+    `}>
+      <div className={`flex justify-between items-center p-5 border-b ${Toggle === "light" ? "bg-white border-gray-200" : "bg-gray-900 border-gray-700"}`}>
         <h3 className="text-2xl font-bold">Admin Panel</h3>
-        <button className="p-1 rounded hover:bg-amber-100">
+        <button 
+          onClick={sidecloser}
+          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          aria-label="Close sidebar"
+        >
           <X size={20} />
         </button>
       </div>
 
-      <nav className="p-4">
+      <nav className="p-4 h-[calc(100vh-73px)] overflow-y-auto">
         {Dashboard.map((section, sectionIndex) => (
           <div key={sectionIndex} className="mb-6">
-            <h2 className="text-xs uppercase font-semibold mb-2 text-gray-500">
+            <h2 className={`text-xs uppercase font-semibold mb-2 ${Toggle === "light" ? "text-gray-500" : "text-gray-400"}`}>
               {section.head}
             </h2>
             <ul className="space-y-1">
@@ -113,15 +125,13 @@ const Navbar = () => {
                   <NavLink
                     to={item.path}
                     className={({ isActive }) =>
-                      `flex items-center p-2 rounded-lg transition-colors ${
-                        isActive
-                          ? "bg-amber-100 text-amber-700"
-                          : "text-gray-700 hover:bg-amber-50"
-                      }`
+                      `flex items-center p-2 rounded-lg transition-colors text-sm font-medium
+                      ${isActive ? 'bg-amber-100 text-amber-700 dark:bg-gray-700 dark:text-amber-400' :
+                        Toggle === 'light' ? 'hover:bg-gray-100 text-gray-700' : 'hover:bg-gray-700 text-gray-200'}`
                     }
                   >
                     <span className="mr-3">{item.icon}</span>
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <span>{item.label}</span>
                   </NavLink>
                 </li>
               ))}

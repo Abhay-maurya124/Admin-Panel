@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-
 export const ThemeFunc = createContext();
 
 export const Theme = ({ children }) => {
@@ -14,11 +13,11 @@ export const Theme = ({ children }) => {
     setOpen(prev => !prev);
   };
 
-  const value = { 
-    Toggle, 
-    Togglebg, 
-    sidecloser, 
-    open 
+  const value = {
+    Toggle,
+    Togglebg,
+    sidecloser,
+    open
   };
 
   return (

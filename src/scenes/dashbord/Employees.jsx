@@ -68,19 +68,20 @@ const Employees = () => {
         <thead>
           <tr className="bg-amber-400">
             {header.map((col) => (
-              <th
+              <td
                 key={col.key}
                 className="px-4 py-2 text-left font-semibold border"
               >
                 {col.label}
-              </th>
+              </td>
             ))}
           </tr>
         </thead>
 
         <tbody>
           {filtered.map((row, rowIndex) => {
-            const image = `https://picsum.photos/1000/1000?random=${rowIndex}`;
+            const image = `https://i.pravatar.cc/150?img=${rowIndex}`
+
             return (
               <tr
                 key={row.Employee ?? rowIndex}

@@ -1,7 +1,7 @@
 import { CheckCheckIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-
+import Pagination from '../global/Pagination'
 const header = [
   { key: "image", label: "Contact" },      // ✅ New column for image + name/email
   { key: "name", label: "Name" },
@@ -14,7 +14,7 @@ const header = [
 
 const statuses = ["Pending", "In Progress", "Completed", "denied"]
 
-const Customer = Array.from({ length: 50 }, (_, i) => ({
+const Customer = Array.from({ length: 100 }, (_, i) => ({
   id: i + 1,
   name: `Customer${i + 1} `,
   email: `abhay@${i + 1}Gmail.com`,
@@ -27,14 +27,22 @@ const Customer = Array.from({ length: 50 }, (_, i) => ({
 }))
 
 const Customers = () => {
-
+  const [Page, setPage] = useState(1)
+  const [perPage, setperPage] = useState(10)
   const [search, setsearch] = useState('')
 
+
   const filtered = Customer.filter((row) => [
-    row.name, row.location, row.project, row.status,row.Weeks,row.email].some((feild) =>
+    row.name, row.location, row.project, row.status, row.Weeks, row.email].some((feild) =>
       feild.toLowerCase().includes(search.toLowerCase())
     )
   )
+  const lastIndex = Page * perPage;
+  // { 1*10=10}
+  const firstindex = lastIndex - perPage;
+
+  const currentpost = filtered.slice(firstindex, lastIndex)
+
   // Add mapping at top
   const STATUS_TEXT_CLASSES = {
     "Pending": "text-orange-800",
@@ -82,7 +90,7 @@ const Customers = () => {
         </thead>
 
         <tbody>
-          {filtered.map((row) => (
+          {currentpost.map((row) => (
             <tr
               key={row.id}
               className={``} >
@@ -117,7 +125,12 @@ const Customers = () => {
           }
         </tbody>
       </table>
-    </div>
+      <Pagination
+        totalItems={filtered.length}
+        itemsPerPage={perPage}
+        currentPage={Page}
+        onPageChange={setPage}
+      />    </div>
   )
 }
 

@@ -52,7 +52,7 @@ const Dashboard = [
       {
         icon: <CalendarRange size={18} />,
         label: "Calendar",
-        path: "/calendar",
+        path: "/calendar1",
       },
       {
         icon: <KanbanSquare size={18} />,

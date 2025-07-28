@@ -43,7 +43,6 @@ const Customers = () => {
 
   const currentpost = filtered.slice(firstindex, lastIndex)
 
-  // Add mapping at top
   const STATUS_TEXT_CLASSES = {
     "Pending": "text-orange-800",
     "In Progress": "text-yellow-800",
@@ -52,8 +51,6 @@ const Customers = () => {
   };
 
   const setstatus = (status) => STATUS_TEXT_CLASSES[status] || "";
-
-
 
   return (
     <div>

@@ -87,7 +87,7 @@ const Dashboard = [
       {
         icon: <PieChart size={18} />,
         label: "Pi Chart",
-        path: "/piechart",
+        path: "/piechart1",
       },
     ],
   },

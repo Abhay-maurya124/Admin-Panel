@@ -11,7 +11,7 @@ import Editor from "./scenes/dashbord/Editor.jsx";
 import LineChart1 from "./scenes/dashbord/LineChart.jsx";
 import Areachart from "./scenes/dashbord/Areachart.jsx";
 import Graph from "./scenes/dashbord/Graph.jsx";
-import Piechart from "./scenes/dashbord/Piechart.jsx";
+import Piechart1 from "./scenes/dashbord/Piechart.jsx";
 import Navbar from "./scenes/global/Navbar.jsx";
 import Sidebar from "./scenes/global/Sidebar.jsx";
 import { ThemeFunc } from "./scenes/assets/CreateApi.jsx";
@@ -38,7 +38,7 @@ const App = () => {
               <Route path="/line" element={<LineChart1 />} />
               <Route path="/area" element={<Areachart />} />
               <Route path="/graph" element={<Graph />} />
-              <Route path="/piechart" element={<Piechart />} />
+              <Route path="/piechart1" element={<Piechart1 />} />
             </Routes>
           </main>
           <Footer />

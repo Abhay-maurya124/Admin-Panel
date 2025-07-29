@@ -35,12 +35,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 }
 
 const LineChart1 = () => (
-  <div className="h-full w-full overflow-hidden font-sans">
+  <div className="lg:h-full  lg:w-full overflow-hidden font-sans">
     <div className="mb-6">
       <h3 className="text-gray-400 text-xl">Line‑Chart</h3>
       <h1 className="lg:text-3xl text-lg font-semibold">Inflation Chart of Product Sales</h1>
     </div>
-    <div className="h-[400px] lg:h-[500px]">
+    <div className="h-[300px] w-[340px] overflow-x-hidden lg:h-[500px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />

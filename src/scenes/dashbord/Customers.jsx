@@ -1,134 +1,131 @@
-import { CheckCheckIcon } from 'lucide-react'
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import Pagination from '../global/Pagination'
-const header = [
-  { key: "image", label: "Contact" },      // ✅ New column for image + name/email
+import React, { useState } from "react";
+import Pagination from "../global/Pagination";
+import { NavLink } from "react-router-dom";
+
+const headers = [
+  { key: "image", label: "Contact" },
   { key: "name", label: "Name" },
   { key: "project", label: "Project" },
   { key: "status", label: "Status" },
-  { key: "Weeks", label: "Weeks" },
+  { key: "weeks", label: "Weeks" },
   { key: "budget", label: "Budget" },
   { key: "location", label: "Location" },
-]
+];
 
-const statuses = ["Pending", "In Progress", "Completed", "denied"]
+const statuses = ["Pending", "In Progress", "Completed", "Denied"];
 
 const Customer = Array.from({ length: 100 }, (_, i) => ({
   id: i + 1,
-  name: `Customer${i + 1} `,
-  email: `abhay@${i + 1}Gmail.com`,
+  name: `Customer${i + 1}`,
+  email: `abhay${i + 1}@gmail.com`,
   status: statuses[Math.floor(Math.random() * statuses.length)],
   project: `Project ${i + 1}`,
   location: `City ${i + 1}`,
-  Weeks: `${Math.floor(Math.random() * 10) + 1} weeks`,
-  image: `https://i.pravatar.cc/1500?img=${i + 1}`,
+  weeks: `${Math.floor(Math.random() * 10) + 1} weeks`,
+  image: `https://i.pravatar.cc/150?img=${i + 1}`,
   budget: `$${Math.floor(Math.random() * 230) + 30}k`,
-}))
+}));
 
-const Customers = () => {
-  const [Page, setPage] = useState(1)
-  const [perPage, setperPage] = useState(10)
-  const [search, setsearch] = useState('')
+export default function Customers() {
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(10);
+  const [search, setSearch] = useState("");
 
-
-  const filtered = Customer.filter((row) => [
-    row.name, row.location, row.project, row.status, row.Weeks, row.email].some((feild) =>
-      feild.toLowerCase().includes(search.toLowerCase())
+  const filtered = Customer.filter((row) =>
+    headers.some((col) =>
+      (row[col.key] ?? "")
+        .toString()
+        .toLowerCase()
+        .includes(search.toLowerCase())
     )
-  )
-  const lastIndex = Page * perPage;
-  // { 1*10=10}
-  const firstindex = lastIndex - perPage;
+  );
+  const firstIndex = (page - 1) * perPage;
+  const current = filtered.slice(firstIndex, firstIndex + perPage);
 
-  const currentpost = filtered.slice(firstindex, lastIndex)
-
-  const STATUS_TEXT_CLASSES = {
-    "Pending": "text-orange-800",
+  const STATUS_CLASSES = {
+    Pending: "text-orange-800",
     "In Progress": "text-yellow-800",
-    "Completed": "text-green-800",
-    "denied": "text-red-800",
+    Completed: "text-green-800",
+    Denied: "text-red-800",
   };
 
-  const setstatus = (status) => STATUS_TEXT_CLASSES[status] || "";
-
   return (
-    <div>
-      <div className="text-2xl p-5">
-        page/
-        <NavLink to="/customer" className="cursor-pointer text-4xl">
-          Customer
+    <div className="p-2">
+      <div className="flex flex-col items-center mb-4">
+        <p className="text-gray-400">Page</p>
+        <NavLink to="/customer" className="text-2xl font-semibold">
+          Customers
         </NavLink>
       </div>
 
-      <div className="mb-4 px-4">
+      <div className="mb-4">
         <input
-          id="search"
           type="text"
-          placeholder="Search…"
+          placeholder="Search..."
           value={search}
-          onChange={(e) => setsearch(e.target.value)}
-          className="border rounded px-2 py-1"
+          onChange={(e) => setSearch(e.target.value)}
+          className="border rounded w-full max-w-xs p-2"
         />
       </div>
 
-      <table className="w-full">
-        <thead className="min-w-full">
+      <table className="min-w-full bg-white">
+        <thead className="hidden sm:table-header-group bg-gray-100">
           <tr>
-            {header.map((column) => (
-              <td
-                key={column.key}
-                className="px-4 py-2 text-lg font-semibold border text-center"
+            {headers.map((col) => (
+              <th
+                key={col.key}
+                className="px-2 py-3 text-left text-sm font-semibold"
               >
-                {column.label}
-              </td>
+                {col.label}
+              </th>
             ))}
           </tr>
         </thead>
-
-        <tbody>
-          {currentpost.map((row) => (
+        <tbody className="block sm:table-row-group">
+          {current.map((row) => (
             <tr
               key={row.id}
-              className={``} >
-              {header.map((column) => (
+              className="block sm:table-row mb-4 sm:mb-0 bg-gray-50 sm:bg-transparent"
+            >
+              {headers.map((col) => (
                 <td
-                  key={column.key}
-                  className={`px-4 py‑2 text-sm font-semibold border 
-                  text-center ${column.key === 'status' ? setstatus(row.status) : ''}`}
+                  key={col.key}
+                  data-label={col.label}
+                  className={`block sm:table-cell px-2 py-2 text-sm truncate ${
+                    col.key === "status" ? STATUS_CLASSES[row.status] : ""
+                  }`}
                 >
-                  {column.key === "image" ? (
-                    <div className="text-center flex gap-2 p-1 justify-center items-center text-sm">
+                  {col.key === "image" ? (
+                    <div className="flex items-center">
                       <img
                         src={row.image}
                         alt={row.name}
-                        className="h-15 w-15 rounded-full"
+                        className="h-10 w-10 rounded-full mr-2"
                       />
-                      <div>
-                        <p>{row.name}</p>
-                        <p>{row.email}</p>
+                      <div className="sm:hidden">
+                        <p className="font-medium">{row.name}</p>
+                        <p className="text-xs text-gray-500">{row.email}</p>
                       </div>
+                      <div className="hidden sm:block">{row.name}</div>
                     </div>
                   ) : (
-                    row[column.key] ?? "—"
+                    <span>{row[col.key]}</span>
                   )}
                 </td>
-              ))
-
-              }
+              ))}
             </tr>
-          )
-          )
-          }
+          ))}
         </tbody>
       </table>
-      <Pagination
-        totalItems={filtered.length}
-        itemsPerPage={perPage}
-        currentPage={Page}
-        onPageChange={setPage}
-      />    </div>
-  )
-}
 
-export default Customers
+      <div className="mt-4">
+        <Pagination
+          totalItems={filtered.length}
+          itemsPerPage={perPage}
+          currentPage={page}
+          onPageChange={setPage}
+        />
+      </div>
+    </div>
+  );
+}

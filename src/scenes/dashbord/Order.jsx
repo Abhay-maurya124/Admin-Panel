@@ -57,94 +57,109 @@ const Order = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div className="flex gap-4 mb-4 text-xl">
+    <div className="p-4 md:p-6">
+      {/* Search Input */}
+      <div className="mb-4">
         <input
           type="text"
           placeholder="Search by item, Order ID, or status"
           value={searchTerm}
           onChange={(e) => { setSearchTerm(e.target.value); setPageIndex(0); }}
-          className="border rounded-xl text-lg p-1 flex-grow"
+          className="w-full p-2 border rounded-lg text-base md:text-lg"
         />
       </div>
 
-      <table className="border-collapse w-full">
-        <thead>
-          <tr className="bg-gray-100">
-            {Header[0].head.map((col) => (
-              <th key={col.key} className="p-2 text-left border-b border-gray-300">
-                {col.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {pagedData.length > 0 ? (
-            pagedData.map((row) => (
-              <tr
-                key={row.id}
-                className={`border-b-2 border-gray-200   text-xl hover:bg-gray-200 ${getRowClass(
-                  row.status
-                )}`}
-              >
-                {Header[0].head.map((column) => (
-                  <td key={column.key} className="p-3">
-                    {column.key === 'image' ? (
-                      <img
-                        src={row[column.key]}
-                        alt={row.item}
-                        style={{ width: '50px', borderRadius: '4px' }}
-                      />
-                    ) : (
-                      row[column.key]
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={Header[0].head.length} className="text-center p-2 text-lg">
-                No results found
-              </td>
+      {/* Table Container with Horizontal Scroll */}
+      <div className="overflow-x-auto min-h-screen w-67 lg:full">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-100">
+              {Header[0].head.map((col) => (
+                <th 
+                  key={col.key} 
+                  className="p-2 text-left border-b border-gray-300 text-sm md:text-base"
+                >
+                  {col.label}
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {pagedData.length > 0 ? (
+              pagedData.map((row) => (
+                <tr
+                  key={row.id}
+                  className={`border-b border-gray-200 hover:bg-gray-100 ${getRowClass(row.status)}`}
+                >
+                  {Header[0].head.map((column) => (
+                    <td key={column.key} className="p-2 text-sm md:text-base">
+                      {column.key === 'image' ? (
+                        <img
+                          src={row[column.key]}
+                          alt={row.item}
+                          className="w-8 h-8 md:w-10 md:h-10 rounded"
+                        />
+                      ) : (
+                        <span className="whitespace-nowrap">{row[column.key]}</span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={Header[0].head.length} className="text-center p-4 text-sm md:text-base">
+                  No results found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex gap-2">
-          <button onClick={() => setPageIndex(0)} disabled={pageIndex === 0}>
+      <div className="flex flex-col md:flex-row items-center justify-between mt-4 gap-4">
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => setPageIndex(0)} 
+            disabled={pageIndex === 0}
+            className="p-1 md:p-2 disabled:opacity-50"
+          >
             {'<<'}
           </button>
-          <button onClick={() => setPageIndex(pageIndex - 1)} disabled={pageIndex === 0}>
+          <button 
+            onClick={() => setPageIndex(pageIndex - 1)} 
+            disabled={pageIndex === 0}
+            className="p-1 md:p-2 disabled:opacity-50"
+          >
             {'<'}
           </button>
-          <span>
+          <span className="text-sm md:text-base">
             Page {pageIndex + 1} of {totalPages}
           </span>
           <button
             onClick={() => setPageIndex(pageIndex + 1)}
             disabled={pageIndex + 1 >= totalPages}
+            className="p-1 md:p-2 disabled:opacity-50"
           >
             {'>'}
           </button>
           <button
             onClick={() => setPageIndex(totalPages - 1)}
             disabled={pageIndex + 1 >= totalPages}
+            className="p-1 md:p-2 disabled:opacity-50"
           >
             {'>>'}
           </button>
         </div>
 
-        <div>
-          <label>
+        <div className="flex items-center">
+          <label className="text-sm md:text-base">
             Show{' '}
             <select
               value={pageSize}
               onChange={(e) => { setPageSize(+e.target.value); setPageIndex(0); }}
-              className="border rounded p-1"
+              className="border rounded p-1 text-sm md:text-base"
             >
               {[5, 10, 20].map((size) => (
                 <option key={size} value={size}>

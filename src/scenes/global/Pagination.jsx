@@ -6,7 +6,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
     if (totalPages <= 1) return null
 
     return (
-        <div className="flex justify-center gap-2 my-4">
+        <div className="flex justify-center gap-2 my-4 ">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                     key={page}

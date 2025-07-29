@@ -83,7 +83,7 @@ const Graph = () => (
     <h1 className="lg:text-3xl text-lg font-semibold mb-4">
       Inflation Chart of Product Sales
     </h1>
-    <div style={{ width: '100%', height: 500 }}>
+    <div className='h-100 w-[250px]'>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}

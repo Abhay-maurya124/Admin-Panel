@@ -100,7 +100,8 @@ const Navbar = () => {
     <div className={`
       fixed lg:sticky top-0 z-40 lg:h-screen overflow-hidden transition-all duration-300 ease-in-out
       ${Toggle === "light" ? "bg-white border-r border-gray-200" : "bg-gray-900 border-r border-gray-700 text-white"}
-      ${open ? "w-64" : "w-0 overflow-hidden"}
+      ${open ? "lg:w-64" : "w-0 overflow-hidden"}
+
     `}>
       <div className={`flex justify-between items-center p-5 border-b ${Toggle === "light" ? "bg-white border-gray-200" : "bg-gray-900 border-gray-700"}`}>
         <h3 className="text-2xl font-bold">Admin Panel</h3>
@@ -113,7 +114,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      <nav className="p-4 h-[calc(100vh-73px)] overflow-y-auto">
+      <nav className="p-4 h-[100vh] overflow-y-auto">
         {Dashboard.map((section, sectionIndex) => (
           <div key={sectionIndex} className="mb-6">
             <h2 className={`text-xs uppercase font-semibold mb-2 ${Toggle === "light" ? "text-gray-500" : "text-gray-400"}`}>

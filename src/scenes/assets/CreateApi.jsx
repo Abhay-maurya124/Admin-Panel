@@ -3,7 +3,7 @@ export const ThemeFunc = createContext();
 
 export const Theme = ({ children }) => {
   const [Toggle, setToggle] = useState("light");
-  const [open, setOpen] = useState(true); // Default to open
+  const [open, setOpen] = useState(false); // Default to open
 
   const Togglebg = () => {
     setToggle(prev => (prev === "light" ? "dark" : "light"));

@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import EventPopup from '../global/EventPopup';
+import { ThemeFunc } from '../assets/CreateApi';
 
 const localizer = momentLocalizer(moment);
 
 const initialEvents = [
-  { id: 1, title: 'sport', start: moment().add(1, 'days').set({ hour:10, minute:0 }).toDate(), end: moment().add(1, 'days').set({ hour:11, minute:0 }).toDate() },
-  { id: 2, title: 'name',  start: moment().add(20, 'days').set({ hour:13, minute:0 }).toDate(), end: moment().add(20, 'days').set({ hour:18, minute:0 }).toDate() },
-  { id: 3, title: 'sport', start: moment().add(12, 'days').set({ hour:1, minute:0 }).toDate(),  end: moment().add(12, 'days').set({ hour:9, minute:0 }).toDate() },
+  { id: 1, title: 'sport', start: moment().add(1, 'days').set({ hour: 10, minute: 0 }).toDate(), end: moment().add(1, 'days').set({ hour: 11, minute: 0 }).toDate() },
+  { id: 2, title: 'name', start: moment().add(20, 'days').set({ hour: 13, minute: 0 }).toDate(), end: moment().add(20, 'days').set({ hour: 18, minute: 0 }).toDate() },
+  { id: 3, title: 'sport', start: moment().add(12, 'days').set({ hour: 1, minute: 0 }).toDate(), end: moment().add(12, 'days').set({ hour: 9, minute: 0 }).toDate() },
 ];
 
 const Calendar1 = () => {
+  const { Toggle} = useContext(ThemeFunc);
+
   const [events, setEvents] = useState(initialEvents);
   const [isOpen, setIsOpen] = useState(false);
   const [popupEvent, setPopupEvent] = useState(null);
@@ -39,7 +42,7 @@ const Calendar1 = () => {
   };
 
   return (
-    <div className="px-8 py-6">
+    <div className="lg:px-8 lg:py-6">
       <Calendar
         selectable
         localizer={localizer}
@@ -49,7 +52,7 @@ const Calendar1 = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 600 }}
-        className="bg-white rounded shadow"
+        className={`${Toggle === "light" ? "bg-white border-r border-gray-200" : "bg-gray-900 border-r border-gray-700 text-white"}`}
       />
       {isOpen && (
         <EventPopup

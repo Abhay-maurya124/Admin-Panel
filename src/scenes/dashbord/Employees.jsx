@@ -33,91 +33,130 @@ const data = [
   { Employee: "Priya Singh", Designation: "UX Designer", Country: "India", hireDate: "2022-11-10", ReportTo: "Sarah Johnson" }
 ];
 
-
 const Employees = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filtered = data.filter((row) =>
     [row.Employee, row.Designation, row.Country]
-      .some((field) =>
-        field.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      .some((field) => field.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
-    <div className="overflow-x-auto">
-      <div className="text-2xl p-5">
+    <div className="p-4">
+      <div className="text-2xl mb-4">
         page/
-        <NavLink to="/employees" className="cursor-pointer text-4xl">
+        <NavLink to="/employees" className="text-4xl">
           Employees
         </NavLink>
       </div>
 
-      <div className="mb-4 px-4">
+      <div className="mb-4">
         <input
-          id="search"
           type="text"
           placeholder="Search…"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded px-2 py-1"
+          className="w-full border rounded px-2 py-1"
         />
       </div>
 
-      <table className="min-w-full">
-        <thead>
-          <tr className="bg-amber-400">
-            {header.map((col) => (
-              <td
-                key={col.key}
-                className="px-4 py-2 text-left font-semibold border"
-              >
-                {col.label}
-              </td>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {filtered.map((row, rowIndex) => {
-            const image = `https://i.pravatar.cc/150?img=${rowIndex}`
-
-            return (
-              <tr
-                key={row.Employee ?? rowIndex}
-                className="hover:bg-gray-300"
-              >
-                {header.map((col) => (
-                  <td
-                    key={col.key}
-                    className="px-4 py-2 border-gray-300 border"
-                  >
-                    {col.key === "avatar" ? (
-                      <img
-                        src={image}
-                        alt={`Avatar of ${row.Employee}`}
-                        className="w-18 h-18 rounded-full"
-                      />
-                    ) : (
-                      row[col.key]
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-
-          {filtered.length === 0 && (
-            <tr>
-              <td colSpan={header.length} className="text-center py-4">
-                No employees found.
-              </td>
+      {/* Desktop/Table view (≥ md) */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="bg-amber-400">
+              {header.map((col) => (
+                <th
+                  key={col.key}
+                  className="px-4 py-2 text-left font-semibold border"
+                >
+                  {col.label}
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filtered.length ? (
+              filtered.map((row, idx) => {
+                const imgSrc = `https://i.pravatar.cc/150?img=${idx}`;
+                return (
+                  <tr
+                    key={row.Employee + idx}
+                    className="hover:bg-gray-200"
+                  >
+                    {header.map((col) => (
+                      <td key={col.key} className="px-4 py-2 border">
+                        {col.key === "avatar" ? (
+                          <img
+                            src={imgSrc}
+                            alt={`Avatar of ${row.Employee}`}
+                            className="w-12 h-12 rounded-full"
+                          />
+                        ) : (
+                          row[col.key]
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={header.length} className="text-center py-4">
+                  No employees found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile/Card view (< md) */}
+      <div className="md:hidden space-y-4">
+        {filtered.length ? (
+          filtered.map((row, idx) => {
+            const imgSrc = `https://i.pravatar.cc/150?img=${idx}`;
+            return (
+              <div
+                key={row.Employee + idx}
+                className="border rounded-lg p-4 shadow-sm"
+              >
+                <div className="flex items-center space-x-4 mb-2">
+                  <img
+                    src={imgSrc}
+                    alt={`Avatar of ${row.Employee}`}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <div>
+                    <div className="text-lg font-semibold">{row.Employee}</div>
+                    <div className="text-sm text-gray-600">
+                      {row.Designation}
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="font-semibold">Country:</span> {row.Country}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Hired:</span> {row.hireDate}
+                  </div>
+                  <div className="col-span-2">
+                    <span className="font-semibold">Reports To:</span>{" "}
+                    {row.ReportTo}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="text-center py-4">No employees found.</div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default Employees;
+
+

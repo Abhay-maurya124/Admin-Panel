@@ -10,29 +10,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  Legend
 } from 'recharts';
-
-// Custom tooltip
-const CustomTooltip = ({ active, payload, label }) => {
-  if (!active || !payload || !payload.length) return null;
-  return (
-    <div style={{
-      backgroundColor: 'white',
-      padding: '12px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-      fontSize: '14px'
-    }}>
-      <div style={{ marginBottom: '6px', fontWeight: '600' }}>{label}</div>
-      {payload.map((item, idx) => (
-        <div key={idx} style={{ color: item.color, margin: '2px 0' }}>
-          {item.name}: <strong>{item.value.toLocaleString()}</strong>
-        </div>
-      ))}
-    </div>
-  );
-};
 const data = [
   {
     name: 'City A',
@@ -77,13 +56,33 @@ const data = [
     Others: 380,
   },
 ];
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload || payload.length === 0) return null;
+  return (
+    <div style={{
+      backgroundColor: 'white',
+      padding: '12px',
+      borderRadius: '8px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      fontSize: '14px'
+    }}>
+      <div style={{ fontWeight: 600, marginBottom: 6 }}>{label}</div>
+      {payload.map((item, idx) => (
+        <div key={idx} style={{ color: item.color, margin: '2px 0' }}>
+          {item.name}: <strong>{item.value.toLocaleString()}</strong>
+        </div>
+      ))}
+    </div>
+  );
+};
 const Graph = () => (
   <div className="mb-6 max-w-4xl mx-auto p-4">
     <h3 className="text-gray-400 text-xl">Composed Chart</h3>
     <h1 className="lg:text-3xl text-lg font-semibold mb-4">
       Inflation Chart of Product Sales
     </h1>
-    <div className='h-100 w-[250px]'>
+    {/* Wrapper with defined height */}
+    <div className="w-full h-64 md:h-80 lg:h-96 relative">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}
@@ -98,7 +97,7 @@ const Graph = () => (
           <Tooltip content={<CustomTooltip />} />
           <Legend verticalAlign="top" align="right" height={36} />
 
-          {/* Gradient Definition for Area */}
+          {/* Gradient */}
           <defs>
             <linearGradient id="gradHamper" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -106,7 +105,7 @@ const Graph = () => (
             </linearGradient>
           </defs>
 
-          {/* Chart Elements */}
+          {/* Chart elements */}
           <Area
             type="monotone"
             dataKey="Hamper"

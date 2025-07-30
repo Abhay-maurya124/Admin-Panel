@@ -20,6 +20,7 @@ export const Theme = ({ children }) => {
     open
   };
 
+
   return (
     <ThemeFunc.Provider value={value}>
       {children}

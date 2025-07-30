@@ -38,7 +38,11 @@ const Hero = () => {
 
   return (
     <div className=' sm:p-0 overflow-hidden w-full'>
-      <div className={`flex flex-col sm:flex-row justify-center items-center gap-6 shadow-xl rounded-2xl p-6 sm:p-0 sm:mx-4 md:mx-12 lg:mx-24 xl:mx-48 mb-8 m-0 ${Toggle === "light" ? "bg-white shadow-gray-200" : "bg-gray-900 shadow-gray-800 text-white"}`}>
+      <div className={`flex flex-col sm:flex-row justify-center 
+        items-center gap-6 shadow-xl rounded-2xl
+         p-6 sm:p-0 sm:mx-4 md:mx-12 lg:mx-24 
+         xl:mx-48 mb-8 m-0 
+         ${Toggle === "light" ? "bg-white shadow-gray-200" : "bg-gray-900 shadow-gray-800 text-white"}`}>
         <div className='text-center sm:text-left sm:m-10 order-2 sm:order-1'>
           <p className='text-xl sm:text-3xl text-gray-600 dark:text-gray-300'>Earnings</p>
           <p className='text-2xl sm:text-4xl'>$64,448.78</p>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Pagination from "../global/Pagination";
 import { NavLink } from "react-router-dom";
+import { ThemeFunc } from "../assets/CreateApi";
 
 const headers = [
   { key: "image", label: "Contact" },
@@ -14,10 +15,10 @@ const headers = [
 
 const statuses = ["Pending", "In Progress", "Completed", "Denied"];
 
-const Customer = Array.from({ length: 100 }, (_, i) => ({
+const Customer = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   name: `Customer${i + 1}`,
-  email: `abhay${i + 1}@gmail.com`,
+  email: `Customer${i + 1}@gmail.com`,
   status: statuses[Math.floor(Math.random() * statuses.length)],
   project: `Project ${i + 1}`,
   location: `City ${i + 1}`,
@@ -48,6 +49,7 @@ export default function Customers() {
     Completed: "text-green-800",
     Denied: "text-red-800",
   };
+  const { Toggle } = useContext(ThemeFunc);
 
   return (
     <div className="p-2">
@@ -68,8 +70,9 @@ export default function Customers() {
         />
       </div>
 
-      <table className="min-w-full bg-white">
-        <thead className="hidden sm:table-header-group bg-gray-100">
+      <table className="min-w-full ">
+        <thead className={`hidden sm:table-header-group 
+          ${Toggle === "light" ? "bg-white shadow-gray-200" : "bg-gray-600 shadow-gray-200 text-white"} `}>
           <tr>
             {headers.map((col) => (
               <th
@@ -81,7 +84,7 @@ export default function Customers() {
             ))}
           </tr>
         </thead>
-        <tbody className="block sm:table-row-group">
+        <tbody className={`block sm:table-row-group`}>
           {current.map((row) => (
             <tr
               key={row.id}
@@ -91,26 +94,26 @@ export default function Customers() {
                 <td
                   key={col.key}
                   data-label={col.label}
-                  className={`block sm:table-cell px-2 py-2 text-sm truncate ${
-                    col.key === "status" ? STATUS_CLASSES[row.status] : ""
-                  }`}
+                  className={`block sm:table-cell px-2 p-1 text-sm truncate ${col.key === "status" ? STATUS_CLASSES[row.status] : ""
+                    }`}
                 >
                   {col.key === "image" ? (
                     <div className="flex items-center">
                       <img
                         src={row.image}
                         alt={row.name}
-                        className="h-10 w-10 rounded-full mr-2"
+                        className="sm:h-10 h-18 sm:w-10  rounded-full mr-6 "
                       />
-                      <div className="sm:hidden">
-                        <p className="font-medium">{row.name}</p>
-                        <p className="text-xs text-gray-500">{row.email}</p>
+                      <div className="">
+                        <p className="font-medium hidden sm:block text-lg">{row.name}</p>
+                        <p className="  sm:block text-xs text-gray-500">{row.email}</p>
                       </div>
-                      <div className="hidden sm:block">{row.name}</div>
                     </div>
                   ) : (
-                    <span>{row[col.key]}</span>
-                  )}
+                    <div className="flex flex-wrap sm:block">
+                      <span className="block sm:hidden font-semibold mr-3">{col.label}  :</span>
+                      <span>{row[col.key]}</span>
+                    </div>)}
                 </td>
               ))}
             </tr>

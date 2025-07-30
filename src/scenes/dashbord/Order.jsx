@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ThemeFunc } from '../assets/CreateApi';
 
 const fakeOrder = (count) => {
   const items = ['t-shirt', 'jeans', 'shirt', 'trouser', 'mountains', 'river'];
@@ -55,6 +56,7 @@ const Order = () => {
     if (status === 'on-way') return 'font-bold';
     return 'text-black';
   };
+  const { Toggle } = useContext(ThemeFunc);
 
   return (
     <div className="p-4 md:p-6">
@@ -70,14 +72,14 @@ const Order = () => {
       </div>
 
       {/* Table Container with Horizontal Scroll */}
-      <div className="overflow-x-auto min-h-screen w-67 lg:full">
+      <div className="overflow-x-auto min-h-screen sm:min-w-full w-64 font-bold text-xl">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className={`  ${Toggle === "light" ? "bg-white shadow-gray-200" : "bg-gray-600 shadow-gray-200 text-white"}`}>
               {Header[0].head.map((col) => (
-                <th 
-                  key={col.key} 
-                  className="p-2 text-left border-b border-gray-300 text-sm md:text-base"
+                <th
+                  key={col.key}
+                  className="p-2 text-left border-b border-gray-300 text-sm md:text-xl"
                 >
                   {col.label}
                 </th>
@@ -89,10 +91,11 @@ const Order = () => {
               pagedData.map((row) => (
                 <tr
                   key={row.id}
-                  className={`border-b border-gray-200 hover:bg-gray-100 ${getRowClass(row.status)}`}
+                  className={`border-b border-gray-200 hover:bg-gray-400 
+                    ${getRowClass(row.status)}`}
                 >
                   {Header[0].head.map((column) => (
-                    <td key={column.key} className="p-2 text-sm md:text-base">
+                    <td key={column.key} className="p-2 text-sm md:text-lg">
                       {column.key === 'image' ? (
                         <img
                           src={row[column.key]}
@@ -120,15 +123,15 @@ const Order = () => {
       {/* Pagination Controls */}
       <div className="flex flex-col md:flex-row items-center justify-between mt-4 gap-4">
         <div className="flex items-center gap-2">
-          <button 
-            onClick={() => setPageIndex(0)} 
+          <button
+            onClick={() => setPageIndex(0)}
             disabled={pageIndex === 0}
             className="p-1 md:p-2 disabled:opacity-50"
           >
             {'<<'}
           </button>
-          <button 
-            onClick={() => setPageIndex(pageIndex - 1)} 
+          <button
+            onClick={() => setPageIndex(pageIndex - 1)}
             disabled={pageIndex === 0}
             className="p-1 md:p-2 disabled:opacity-50"
           >

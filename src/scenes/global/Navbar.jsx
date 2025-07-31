@@ -114,7 +114,9 @@ const Navbar = () => {
         </button>
       </div>
 
-      <nav className="p-4 h-[100vh] overflow-y-auto">
+      <nav
+      onClick={sidecloser}
+      className="p-4 h-[100vh] overflow-y-auto ">
         {Dashboard.map((section, sectionIndex) => (
           <div key={sectionIndex} className="mb-6">
             <h2 className={`text-xs uppercase font-semibold mb-2 ${Toggle === "light" ? "text-gray-500" : "text-gray-400"}`}>

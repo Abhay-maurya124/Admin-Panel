@@ -60,8 +60,11 @@ const Order = () => {
 
   return (
     <div className="p-4 md:p-6">
-      {/* Search Input */}
-      <div className="mb-4">
+
+      <div className='sm:flex text-xl items-center m-2'>
+        <p className=''>Page</p>
+        <h2 className='text-4xl font-bold hover:text-neutral-700 cursor-pointer'>/Order</h2>
+      </div>      <div className="mb-4">
         <input
           type="text"
           placeholder="Search by item, Order ID, or status"

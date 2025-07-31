@@ -8,9 +8,7 @@ import { ThemeFunc } from '../assets/CreateApi';
 const localizer = momentLocalizer(moment);
 
 const initialEvents = [
-  { id: 1, title: 'sport', start: moment().add(1, 'days').set({ hour: 10, minute: 0 }).toDate(), end: moment().add(1, 'days').set({ hour: 11, minute: 0 }).toDate() },
-  { id: 2, title: 'name', start: moment().add(20, 'days').set({ hour: 13, minute: 0 }).toDate(), end: moment().add(20, 'days').set({ hour: 18, minute: 0 }).toDate() },
-  { id: 3, title: 'sport', start: moment().add(12, 'days').set({ hour: 1, minute: 0 }).toDate(), end: moment().add(12, 'days').set({ hour: 9, minute: 0 }).toDate() },
+  
 ];
 
 const Calendar1 = () => {
